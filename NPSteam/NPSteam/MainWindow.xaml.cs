@@ -34,11 +34,11 @@ namespace NPSteam
             InitializeComponent();
             var processList = Process.GetProcessesByName(appName);
 
-            string pid;
+            string pid = null;
             var time = Stopwatch.StartNew();
             
-            Process steamApp = getSteamProcess(processList);
-            string wmiQuery = string.Format("select CommandLine from Win32_Process where ProcessId = {0}", steamApp.Id);
+            Process overlayApp = getSteamProcess(processList);
+            string wmiQuery = string.Format("select CommandLine from Win32_Process where ProcessId = {0}", overlayApp.Id);
             var searcher = new ManagementObjectSearcher(wmiQuery);
             var retCollection = searcher.Get();
             foreach(var retObject in retCollection)
@@ -46,7 +46,7 @@ namespace NPSteam
                 pid = Regex.Match(retObject["CommandLine"].ToString(), regexPattern).Value;
                 Console.WriteLine("pid = {0}", pid);
             }
-            
+            Process steamApp = Process.GetProcessById(Convert.ToInt16(pid));
             time.Stop();
             Debug.WriteLine(time.ElapsedMilliseconds);
 
