@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using TweetSharp;
 namespace NPSteam
 {
     /// <summary>
@@ -22,6 +23,24 @@ namespace NPSteam
         public TwitterAuth()
         {
             InitializeComponent();
+            
+        }
+        TextBox verifierField;
+        private bool Authenticate()
+        {
+            var service = new TwitterService(Global.consumerKey, Global.consumerSecret);
+            var requestTkn = service.GetRequestToken();
+            Uri uri = service.GetAuthorizationUri(requestTkn);
+
+
+            return false;
+        }
+        private void DisplayInputField()
+        {
+           // Main_Layout.Children.Remove(progress_ring);
+            verifierField = new TextBox();
+            verifierField.AcceptsReturn = false;
+            
         }
     }
 }

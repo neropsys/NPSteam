@@ -6,14 +6,31 @@
         Height="200" 
         Width="200"
         ResizeMode="NoResize"
-                      
-                      
-                      >
-    <Grid>
+                      Background="DimGray">
+    <Grid Name="Main_Layout">
+        <!--
         <Controls:ProgressRing IsActive="True" HorizontalAlignment="Center" Height="125" Width="125"
-                               VerticalAlignment="Top"
-                               Foreground="DarkSlateGray">
+                               VerticalAlignment="Center"
+                               Foreground="LightGray"
+                               Name="progress_ring">
         </Controls:ProgressRing>
-        
+        -->
+        <Label Content="giff auth key"
+               FontSize="20"
+               Height="40"
+               HorizontalAlignment="Center" Margin="34,49,34,83"
+               />
+        <TextBox
+            Width="100"
+            Height="50"
+            FontSize="20"
+            FontWeight="Bold"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Center" Margin="47,95,47,27"
+            
+            />
+
+
     </Grid>
 </Controls:MetroWindow>
