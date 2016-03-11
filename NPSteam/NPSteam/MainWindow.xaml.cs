@@ -17,6 +17,7 @@ using System;
 using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using MahApps.Metro.Controls;
 //(?!-pid)(\d+)\w
 //regex for parsing pid
 
@@ -25,7 +26,7 @@ namespace NPSteam
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         const string appName = "GameOverlayUI";
         const string regexPattern = @"(?!-pid)(\d+)\w";
