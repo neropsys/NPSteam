@@ -1,0 +1,28 @@
+﻿<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        
+        <TextBox Width="100"
+                 Height="50"
+                 FontSize="20"
+                 FontWeight="Bold"
+                 HorizontalContentAlignment="Center"
+                 VerticalContentAlignment="Center"
+                 Margin="47, 67, 47, 54"/>
+        <Label Content="Giff auth key"
+               FontSize="20"
+               Height="40"
+               HorizontalAlignment="Center"
+               Margin="34, 21, 34, 100"/>
+        <Button Width="50"
+                Height="25"
+                Content="Submit"
+                Margin="47, 117, 97, 29"/>
+        <Button Width="50"
+                Height="25"
+                Content="Cancel"
+                Margin="97, 117, 47, 29"/>
+
+
+
+
+    </Grid>
+
