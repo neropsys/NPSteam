@@ -3,34 +3,37 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Threading.Tasks;
-using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.Controls;
 using System.Windows.Markup;
+using System.Windows.Input;
 using TweetSharp;
 using System.IO;
-
+using MahApps.Metro.Controls.Dialogs;
 namespace NPSteam
 {
     /// <summary>
     /// Interaction logic for TwitterAuth.xaml
     /// </summary>
-    public partial class TwitterAuth : MahApps.Metro.Controls.MetroWindow
+    public partial class TwitterAuth
     {
-        TwitterAuth Instance;
         public TwitterAuth()
         {
-            Instance = this;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             
         }
-        TextBox verifierField;
-        private Label label;
-        private Button submitButton;
-        private Button cancelButton;
+        Button submitBtn, cancelBtn;
+        TextBox verifierBox;
+
+        OAuthRequestToken requestTkn;
+        UIElement verifierLayout;
+        MainWindow mainWindow;
+
         private async void Authenticate()
         {
-            var service = new TwitterService(Global.consumerKey, Global.consumerSecret);
-            OAuthRequestToken requestTkn = await Task.Run(new Func<OAuthRequestToken>(service.GetRequestToken));
-            Uri uri = service.GetAuthorizationUri(requestTkn);
+            Global.Service = new TwitterService(Global.ConsumerKey, Global.ConsumerSecret);
+            requestTkn = await Task.Run(new Func<OAuthRequestToken>(Global.Service.GetRequestToken));
+            Uri uri = Global.Service.GetAuthorizationUri(requestTkn);
             Process.Start(uri.ToString());
             DisplayInputField();
             return;
@@ -38,17 +41,77 @@ namespace NPSteam
         private void DisplayInputField()
         {
             Main_Layout.Children.Remove(progress_ring);
-            UIElement root;
             FileStream s = new FileStream("VerifierLayout.xaml", FileMode.Open);
-            root = (UIElement)XamlReader.Load(s);
+            verifierLayout = (UIElement)XamlReader.Load(s);
             s.Close();
-            Main_Layout.Children.Add(root);
-          
+            Main_Layout.Children.Add(verifierLayout);
+            submitBtn = LogicalTreeHelper.FindLogicalNode(Window.GetWindow(this), "SubmitBtn") as Button;
+            cancelBtn = LogicalTreeHelper.FindLogicalNode(Window.GetWindow(this), "CancelBtn") as Button;
+            verifierBox = LogicalTreeHelper.FindLogicalNode(Window.GetWindow(this), "VerifierBox") as TextBox;
+            submitBtn.Click += SubmitBtn_MouseLeftButtonDown;
+            cancelBtn.Click += CancelBtn_MouseLeftButtonDown;
+            verifierBox.KeyDown += (object sender, KeyEventArgs e)=>{
+                if(e.Key == Key.Enter)
+                {
+                    CheckKey();
+                }
+            };
+
+
+        }
+
+    
+
+        private async void CheckKey()
+        {
+            bool authSuccess = false;
+            OAuthAccessToken accessTkn = Global.Service.GetAccessToken(requestTkn, verifierBox.Text);
+            Main_Layout.Children.Remove(verifierLayout);
+            Main_Layout.Children.Add(progress_ring);
+            await Task.Run(() =>
+            {
+                Global.Service.AuthenticateWith(accessTkn.Token, accessTkn.TokenSecret);
+                if (Global.Service.Response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    authSuccess = false;
+                }
+                else
+                {
+                    authSuccess = true;
+                }
+            });
+            if(authSuccess == true)
+            {
+                mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+                //show mainform
+            }
+            else
+            {
+                var dialogue = this.ShowMessageAsync("Failed!", ":(");
+                await dialogue;
+                if(dialogue.Result == MessageDialogResult.Affirmative)
+                {
+                    Application.Current.Shutdown();
+                }
+            }
+        }
+       
+        private void CancelBtn_MouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void SubmitBtn_MouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            CheckKey();
         }
 
         private void AuthWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            DisplayInputField();
+            
+            Authenticate();
         }
     }
 }

@@ -6,7 +6,8 @@
                  FontWeight="Bold"
                  HorizontalContentAlignment="Center"
                  VerticalContentAlignment="Center"
-                 Margin="47, 67, 47, 54"/>
+                 Margin="47, 67, 47, 54"
+                 Name="VerifierBox"/>
         <Label Content="Giff auth key"
                FontSize="20"
                Height="40"
@@ -15,11 +16,14 @@
         <Button Width="50"
                 Height="25"
                 Content="Submit"
-                Margin="47, 117, 97, 29"/>
+                Margin="47, 117, 97, 29"
+                Name="SubmitBtn"
+                />
         <Button Width="50"
                 Height="25"
                 Content="Cancel"
-                Margin="97, 117, 47, 29"/>
+                Margin="97, 117, 47, 29"
+                Name="CancelBtn"/>
 
 
 

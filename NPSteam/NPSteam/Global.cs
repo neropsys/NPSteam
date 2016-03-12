@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TweetSharp;
 
 namespace NPSteam
 {
     class Global
     {
-        public static int pid;
-        public const string consumerKey = Token.consumerKey;
-        public const string consumerSecret = Token.consumerSecret;
-        public static string verifier;
+        public static int Pid;
+        public const string ConsumerKey = Token.consumerKey;
+        public const string ConsumerSecret = Token.consumerSecret;
+        public static TwitterService Service;
     }
 }
