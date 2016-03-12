@@ -9,7 +9,7 @@ namespace NPSteam
 {
     class Global
     {
-        public static int Pid;
+        public static string Pid;
         public const string ConsumerKey = Token.consumerKey;
         public const string ConsumerSecret = Token.consumerSecret;
         public static TwitterService Service;

@@ -3,6 +3,7 @@ using System.Management;
 using System;
 using System.Text.RegularExpressions;
 using System.Timers;
+using System.Threading.Tasks;
 using System.Windows;
 //(?!-pid)(\d+)\w
 //regex for parsing pid
@@ -16,20 +17,14 @@ namespace NPSteam
     {
         const string appName = "GameOverlayUI";
         const string regexPattern = @"(?!-pid)(\d+)\w";
-        Timer timer;
-        string pid;
+        string gameName = null;
         public MainWindow()
         {
             InitializeComponent();
 
 
-            //timer = new Timer(5000);
-            pid = null;          
-            var time = Stopwatch.StartNew();
-            scanProcess();
+            //timer = new Timer(5000);        
             
-            time.Stop();
-            Debug.WriteLine(time.ElapsedMilliseconds);
 
         }
 
@@ -46,11 +41,15 @@ namespace NPSteam
             var retCollection = searcher.Get();
             foreach (var retObject in retCollection)
             {
-                pid = Regex.Match(retObject["CommandLine"].ToString(), regexPattern).Value;
-                Process steamApp = Process.GetProcessById(Convert.ToInt16(pid));
+                Global.Pid = Regex.Match(retObject["CommandLine"].ToString(), regexPattern).Value;
+                Process steamApp = Process.GetProcessById(Convert.ToInt16(Global.Pid));
 
-                Console.WriteLine("pid = {0}, game Name = {1}", pid, steamApp.MainWindowTitle);
+                Console.WriteLine("pid = {0}, game Name = {1}", Global.Pid, steamApp.MainWindowTitle);
+                gameName = steamApp.MainWindowTitle;
+                //Global.Service.sendt
             }
+            retCollection.Dispose();
+            searcher.Dispose();
             
         }
         Process getSteamProcess(Process[] processList)
@@ -71,6 +70,9 @@ namespace NPSteam
             var screenArea = SystemParameters.WorkArea;
             Left = screenArea.Right - Width;
             Top = screenArea.Bottom - Height;
+            scanProcess();
+            string tweetFormat = "Now Playing - " + gameName + " On Steam #NPSteam";
+            var result = Global.Service.BeginSendTweet(new TweetSharp.SendTweetOptions { Status = tweetFormat });
         }
     }
 

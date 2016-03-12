@@ -65,11 +65,12 @@ namespace NPSteam
         private async void CheckKey()
         {
             bool authSuccess = false;
-            OAuthAccessToken accessTkn = Global.Service.GetAccessToken(requestTkn, verifierBox.Text);
             Main_Layout.Children.Remove(verifierLayout);
             Main_Layout.Children.Add(progress_ring);
+            OAuthAccessToken accessTkn = Global.Service.GetAccessToken(requestTkn, verifierBox.Text);
             await Task.Run(() =>
             {
+                
                 Global.Service.AuthenticateWith(accessTkn.Token, accessTkn.TokenSecret);
                 if (Global.Service.Response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
@@ -84,7 +85,7 @@ namespace NPSteam
             {
                 mainWindow = new MainWindow();
                 mainWindow.Show();
-                this.Close();
+                Close();
                 //show mainform
             }
             else
