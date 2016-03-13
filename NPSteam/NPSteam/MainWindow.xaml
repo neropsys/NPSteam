@@ -10,8 +10,29 @@
     Title="NowPlaying-Steam"         
     Height="200" 
     Width="200"
-    Loaded="MetroWindow_Loaded">
+    Loaded="MetroWindow_Loaded"
+    Background="DimGray">
     <Grid>
-        
+        <Label
+            Content="You are Playing"
+            HorizontalAlignment="Center"
+            FontSize="20"
+            FontWeight="Bold"/>
+        <Image
+            Name="GameIcon"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Stretch="None"
+            Width="100"
+            Height="100"/>
+        <TextBlock
+            Name="GameName"
+            FontSize="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Width="180"
+            Text="Stub"
+            TextAlignment="Center"
+            TextWrapping="Wrap"/>
     </Grid>
 </Controls:MetroWindow>

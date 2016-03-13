@@ -2,9 +2,10 @@
 using System.Management;
 using System;
 using System.Text.RegularExpressions;
-using System.Timers;
-using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Interop;
 //(?!-pid)(\d+)\w
 //regex for parsing pid
 
@@ -19,7 +20,7 @@ namespace NPSteam
         const string pidRegex = @"(?!-pid)(\d+)\w";
         const string overlaydPidQuery = "select CommandLine from Win32_Process where ProcessId = {0}";
         const string gameDirQueryString = "select ExecutablePath from Win32_Process where ProcessId = {0}";
-        string gameName = null;
+        string exeDir = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,9 +36,11 @@ namespace NPSteam
             var processList = Process.GetProcessesByName(appName);
             Process overlayApp = getSteamProcess(processList);
 
-
+            //if overlayapp is none, game is not being played
             if (overlayApp == null)
+            {
                 return;
+            }
 
 
             string wmiQuery = string.Format(overlaydPidQuery, overlayApp.Id);
@@ -59,18 +62,21 @@ namespace NPSteam
                         foreach(var gameProcess in retValue)
                         {
                             Console.WriteLine("exe directory : " + gameProcess["ExecutablePath"].ToString());
+                            exeDir = gameProcess["ExecutablePath"].ToString();
                             var directorArray = gameProcess["ExecutablePath"].ToString().Split('\\');
 
 
                             //get name of the game from directory instead of window title of the game
                             Console.WriteLine("directory : " + directorArray[directorArray.Length-2]);
-                            gameName = directorArray[directorArray.Length - 2];
+                            Global.CurrentGameName = directorArray[directorArray.Length - 2];
                         }
 
                     }
-
-
-                    Console.WriteLine("pid = {0}, game Name = {1}", Global.Pid, steamApp.MainWindowTitle);
+                    var icon = System.Drawing.Icon.ExtractAssociatedIcon(exeDir);
+                    ImageSource iconImage = Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    GameIcon.Source = iconImage;
+                    GameName.Text = Global.CurrentGameName;
+                        
                 }
             }
         }
@@ -93,7 +99,7 @@ namespace NPSteam
             Left = screenArea.Right - Width;
             Top = screenArea.Bottom - Height;
             scanProcess();
-            string tweetFormat = "Now Playing - " + gameName + " on Steam #NPSteam";
+            string tweetFormat = "Now Playing - " + CurrentGameName + " on Steam #NPSteam";
             var result = Global.Service.BeginSendTweet(new TweetSharp.SendTweetOptions { Status = tweetFormat });
         }
     }
