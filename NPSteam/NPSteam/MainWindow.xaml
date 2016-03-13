@@ -11,9 +11,16 @@
     Height="200" 
     Width="200"
     Loaded="MetroWindow_Loaded"
+    Closing="MetroWindow_Closing"
     Background="DimGray">
     <Grid>
+        <Controls:ProgressRing IsActive="True" HorizontalAlignment="Center" Height="100" Width="100"
+                               VerticalAlignment="Center"
+                               Foreground="LightGray"
+                               Name="progress_ring">
+        </Controls:ProgressRing>
         <Label
+            Name="StatusLabel"
             Content="You are Playing"
             HorizontalAlignment="Center"
             FontSize="20"
@@ -24,15 +31,19 @@
             VerticalAlignment="Center"
             Stretch="None"
             Width="100"
-            Height="100"/>
+            Height="100"
+            />
         <TextBlock
             Name="GameName"
             FontSize="20"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Width="180"
-            Text="Stub"
+            Text="None"
             TextAlignment="Center"
-            TextWrapping="Wrap"/>
+            TextWrapping="Wrap"
+            FontWeight="Bold"
+            Foreground="Black"
+            />
     </Grid>
 </Controls:MetroWindow>
