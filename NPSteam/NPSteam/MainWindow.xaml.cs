@@ -28,7 +28,6 @@ namespace NPSteam
         string exeDir = null;
         string currentPid = null;
         Icon gameIcon = null;
-        ProgressRing loadingRing;
         
 
         DispatcherTimer timer;
@@ -87,6 +86,13 @@ namespace NPSteam
                             //get name of the game from directory instead of window title of the game
                             Console.WriteLine("directory : " + directorArray[directorArray.Length-2]);
                             Global.CurrentGameName = directorArray[directorArray.Length - 2];
+
+
+
+                            // TODO if game is run for first time, pop up the dialog to check if game title from directory matches real game title
+                            //and then save it to ini
+
+
                         }
 
                     }
@@ -154,6 +160,7 @@ namespace NPSteam
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             timer.Stop();
+            // TODO location for saving ini file from Global
         }
     }
 
