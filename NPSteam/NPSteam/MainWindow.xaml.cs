@@ -23,7 +23,7 @@ namespace NPSteam
         const string waitingGameLabel = "Finding Game";
         const string appName = "GameOverlayUI";
         const string pidRegex = @"(?!-pid)(\d+)\w";
-        const string gameDirRegex = @"(?<=\\common\\)(\w+)";
+        const string gameDirRegex = @"(?<=\\common\\)(.*)(?=\\)";
         const string overlaydPidQuery = "select CommandLine from Win32_Process where ProcessId = {0}";
         const string gameDirQueryString = "select ExecutablePath from Win32_Process where ProcessId = {0}";
         string exeDir = null;
@@ -84,15 +84,8 @@ namespace NPSteam
                             var gameFolderName = Regex.Match(exeDir, gameDirRegex).Value;
 
 
-                            //get name of the game from directory instead of window title of the game
                             Console.WriteLine("directory : " + gameFolderName);
                             Global.CurrentGameName = gameFolderName;
-
-
-
-                            // TODO if game is run for first time, pop up the dialog to check if game title from directory matches real game title
-                            //and then save it to ini
-
 
                         }
 
