@@ -16,6 +16,7 @@ namespace NPSteam
         public static TwitterService Service;
         private static Global m_instance;
         private static FileStream m_fstream;
+        private static string titleFilePath;
         public static Global Instance
         {
             get
@@ -33,10 +34,11 @@ namespace NPSteam
 
 
         // TODO Load NPSteam_Titles.ini
-        static Global()
+        private Global()
         {
-            m_fstream = new FileStream("NPSteam_Titles.ini", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            
+            if (File.Exists(titleFilePath)== false)
+                m_fstream = new FileStream("NPSteam_Titles.ini", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            titleFilePath = Path.Combine("NPSteam_Titles.ini", System.Reflection.Assembly.GetExecutingAssembly().Location);
         }
         public void ReadTitle_ini()
         {
