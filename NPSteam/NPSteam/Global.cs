@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TweetSharp;
-
+using System.IO;
 namespace NPSteam
 {
     class Global
@@ -15,6 +15,7 @@ namespace NPSteam
         public const string ConsumerSecret = Token.consumerSecret;
         public static TwitterService Service;
         private static Global m_instance;
+        private static FileStream m_fstream;
         public static Global Instance
         {
             get
@@ -34,8 +35,16 @@ namespace NPSteam
         // TODO Load NPSteam_Titles.ini
         static Global()
         {
-
+            m_fstream = new FileStream("NPSteam_Titles.ini", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            
+        }
+        public void ReadTitle_ini()
+        {
+            // TODO read NPSteam_Title
         }
         // TODO method for saving NPSteam_Title.ini
+        public void CloseTitle_ini(){
+            m_fstream.Close();
+        }
     }
 }

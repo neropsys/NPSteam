@@ -161,6 +161,7 @@ namespace NPSteam
         {
             timer.Stop();
             // TODO location for saving ini file from Global
+            Global.Instance.CloseTitle_ini();
         }
     }
 

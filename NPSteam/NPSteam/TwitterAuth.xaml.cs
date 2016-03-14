@@ -81,10 +81,12 @@ namespace NPSteam
                 else
                 {
                     authSuccess = true;
+                    Global.Instance.ReadTitle_ini();
                 }
             });
             if(authSuccess == true)
             {
+
                 mainWindow = new MainWindow();
                 mainWindow.Show();
                 Close();
