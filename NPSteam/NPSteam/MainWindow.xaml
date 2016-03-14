@@ -10,6 +10,7 @@
     Title="NPSteam"         
     Height="200" 
     Width="200"
+    StateChanged="MetroWindow_StateChanged"
     Loaded="MetroWindow_Loaded"
     Closing="MetroWindow_Closing"
     Background="DimGray">

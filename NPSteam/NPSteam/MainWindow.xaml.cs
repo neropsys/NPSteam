@@ -8,7 +8,6 @@ using System.Windows.Media;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Drawing;
-using MahApps.Metro.Controls;
 //(?!-pid)(\d+)\w
 //regex for parsing pid
 
@@ -29,17 +28,28 @@ namespace NPSteam
         string exeDir = null;
         string currentPid = null;
         Icon gameIcon = null;
-        
+       System.Windows.Forms.NotifyIcon notifyIcon;
 
         DispatcherTimer timer;
         public MainWindow()
         {
             InitializeComponent();
 
-            //timer = new Timer(5000);        
+            notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetEntryAssembly().ManifestModule.Name);
+            notifyIcon.BalloonTipText = "NPSteam is still running here";
+            notifyIcon.DoubleClick += (object sender, EventArgs args)=>
+            {
+                Show();
+                WindowState = WindowState.Normal;
+            };
+            
+              //TODO maybe add context menu for exit button on tray icon
             
 
         }
+
+     
 
         void scanProcess(object sender, EventArgs e)
         {
@@ -156,6 +166,25 @@ namespace NPSteam
             timer.Stop();
             // TODO location for saving ini file from Global
             Global.Instance.CloseTitle_ini();
+        }
+
+        private void MetroWindow_StateChanged(object sender, EventArgs e)
+        {
+            switch (WindowState)
+            {
+                case WindowState.Minimized:
+                    notifyIcon.Visible = true;
+                    notifyIcon.ShowBalloonTip(3000);
+                    ShowInTaskbar = false;
+                    Hide();
+                    break;
+                case WindowState.Normal:
+                    notifyIcon.Visible = false;
+                    ShowInTaskbar = true;
+                    Show();
+                    break;
+            }
+
         }
     }
 
