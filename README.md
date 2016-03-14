@@ -1,4 +1,4 @@
-# NPSteam
+﻿# NPSteam
 - Now Playing! (on Steam) 
 - It posts what you are playing on Steam automatically. On Twitter.
   - (No Facebook. Sorry)
@@ -19,7 +19,12 @@
  - So it won't work on any games(including non-steam) that aren't in there. 
 - 게임 이름은 Steam\steamapps\common 폴더에서 따옵니다
  - 그래서 이 폴더 안에 없는 게임(비스팀 포함)들은 안될거에요.
-
+- Report strange or abbreviated game titles on Github issues. I will add them manually.
+- I can't find the better way of getting proper, consistent game titles.
+ - Suggestion are welcome.
+- 축약되거나 이상한 게임 제목은 이슈란에다 적어주시면 직접 넣겠습니다.
+- 제대로되고 일관적인 게임 제목을 찾기가 힘드네요
+ - 추천 받습니다.
 
 # License
 - [MIT](LICENSE.txt)

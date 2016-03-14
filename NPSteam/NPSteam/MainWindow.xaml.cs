@@ -22,9 +22,10 @@ namespace NPSteam
         const string waitingGameLabel = "Finding Game";
         const string appName = "GameOverlayUI";
         const string pidRegex = @"(?!-pid)(\d+)\w";
-        const string gameDirRegex = @"(?<=\\common\\)(.*)(?=\\)";
+        const string gameDirRegex = @"(?<=\\common\\)[^\\]*";
         const string overlaydPidQuery = "select CommandLine from Win32_Process where ProcessId = {0}";
         const string gameDirQueryString = "select ExecutablePath from Win32_Process where ProcessId = {0}";
+        const string gimutti ="AngGimutti";
         string exeDir = null;
         string currentPid = null;
         Icon gameIcon = null;
@@ -91,7 +92,17 @@ namespace NPSteam
                         {
                             Console.WriteLine("exe directory : " + gameProcess["ExecutablePath"].ToString());
                             exeDir = gameProcess["ExecutablePath"].ToString();
+
                             var gameFolderName = Regex.Match(exeDir, gameDirRegex).Value;
+                            if (String.IsNullOrWhiteSpace(gameFolderName))
+                            {
+                                gameFolderName = "Non-steam game";
+                                gameIcon = notifyIcon.Icon;
+                            }
+                            else
+                            {
+                                gameIcon = System.Drawing.Icon.ExtractAssociatedIcon(exeDir);
+                            }
 
 
                             Console.WriteLine("directory : " + gameFolderName);
@@ -100,10 +111,9 @@ namespace NPSteam
                         }
 
                     }
-                    gameIcon = System.Drawing.Icon.ExtractAssociatedIcon(exeDir);
                     ImageSource iconImage = Imaging.CreateBitmapSourceFromHIcon(gameIcon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
                     setLayout(Global.CurrentGameName, iconImage);
-                        
+
                 }
             }
             SendTweet();
