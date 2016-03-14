@@ -175,7 +175,7 @@ namespace NPSteam
         {
             timer.Stop();
             // TODO location for saving ini file from Global
-            Global.Instance.CloseTitle_ini();
+            //Global.Instance.CloseTitle_ini();
         }
 
         private void MetroWindow_StateChanged(object sender, EventArgs e)

@@ -81,7 +81,7 @@ namespace NPSteam
                 else
                 {
                     authSuccess = true;
-                    Global.Instance.ReadTitle_ini();
+                    //Global.Instance.ReadTitle_ini();
                 }
             });
             if(authSuccess == true)

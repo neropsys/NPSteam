@@ -14,7 +14,8 @@ namespace NPSteam
         public const string ConsumerKey = Token.consumerKey;
         public const string ConsumerSecret = Token.consumerSecret;
         public static TwitterService Service;
-        private static Global m_instance;
+        //private static Global m_instance;
+        /*
         public static Global Instance
         {
             get
@@ -42,5 +43,6 @@ namespace NPSteam
         // TODO method for saving NPSteam_Title.ini
         public void CloseTitle_ini(){
         }
+        */
     }
 }
