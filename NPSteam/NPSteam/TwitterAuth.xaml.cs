@@ -64,13 +64,15 @@ namespace NPSteam
 
         private async void CheckKey()
         {
+            string pinCode = verifierBox.Text;
             bool authSuccess = false;
             Main_Layout.Children.Remove(verifierLayout);
             Main_Layout.Children.Add(progress_ring);
-            OAuthAccessToken accessTkn = Global.Service.GetAccessToken(requestTkn, verifierBox.Text);
+           
+            
             await Task.Run(() =>
             {
-                
+                OAuthAccessToken accessTkn = Global.Service.GetAccessToken(requestTkn, pinCode);
                 Global.Service.AuthenticateWith(accessTkn.Token, accessTkn.TokenSecret);
                 if (Global.Service.Response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
