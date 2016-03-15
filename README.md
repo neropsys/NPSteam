@@ -2,7 +2,8 @@
 - Now Playing! (on Steam) 
 - It posts what you are playing on Steam automatically. On Twitter.
   - (No Facebook. Sorry)
-
+- [Download](https://github.com/neropsys/NPSteam/releases/latest)
+ 
 # How to use
 - NO mouse clicks.
 - NO keyboard types required.
