@@ -32,3 +32,4 @@
 # Open Source Used
 - [MahApps.Metro](http://mahapps.com/)
 - [TweetSharp(Unofficial)](https://www.nuget.org/packages/TweetSharp-Unofficial/)
+- [Costura](https://github.com/Fody/Costura)

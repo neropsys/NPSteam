@@ -13,6 +13,13 @@
         ResizeMode="NoResize"
                       Background="DimGray"
                       Loaded="AuthWindow_Loaded">
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>
     <Grid x:Name="Main_Layout">
 
         <Controls:ProgressRing IsActive="True" HorizontalAlignment="Center" Height="125" Width="125"
